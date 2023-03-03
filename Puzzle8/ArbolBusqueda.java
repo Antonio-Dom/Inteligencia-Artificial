@@ -179,12 +179,15 @@ public class ArbolBusqueda {
     }
 
 	public int Heuristica3(String estado) {
-		//pensndo todavia 
-		
-		return 0;
-		
-		
-		
+			
+		int contador = 0 ;
+    	for(int i = 0; i < objetivo.length(); i++) {
+    		
+    		if(estado.charAt(i) != objetivo.charAt(i) ) {
+    			contador ++;
+    		}
+    	}
+    	return contador;
 		
 	
 	}

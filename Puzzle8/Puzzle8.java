@@ -25,14 +25,14 @@ public class Puzzle8 {
         long fin2 = System.nanoTime();
         long tiempoTotalheuristica2 = fin2 - inicio2;
         System.out.println("Fin heurística 2 \n");
-       // long inicio3 = System.nanoTime();
-       // a.busquedaPorLaHeuristica(3);
-       // long fin3 = System.nanoTime();
-       // long tiempoTotalheuristica3 = ( fin3 - inicio3) / 1000000000;
+       long inicio3 = System.nanoTime();
+        a.busquedaPorLaHeuristica(3);
+        long fin3 = System.nanoTime();
+        long tiempoTotalheuristica3 = ( fin3 - inicio3);
         System.out.println("Fin heurística 3 \n");
         System.out.println("Tiempo por la heuristica 1: "+ tiempoTotalheuristica1);
         System.out.println("Tiempo por la heuristica 2: "+ tiempoTotalheuristica2);
-        //System.out.println("Tiempo por la heuristica 3:  \n"+ tiempoTotalheuristica3);
+        System.out.println("Tiempo por la heuristica 3: "+ tiempoTotalheuristica3);
         
         
        
