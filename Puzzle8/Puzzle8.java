@@ -1,40 +1,91 @@
 package Puzzle8;
-
-import java.util.Collection;
-import java.util.Comparator;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Puzzle8 {
-	//Busqueda facil
-	public static String estadoInicial = "41275386 ";
-	//Busqueda dificil
-   //public static String estadoInicial = "2465 7813";
-
+	
+	public static String estadoRapido = "1524 3786";
+	public static String estadoMedio  = "1 5723486";
+	public static String estadoLento  = "12578 346";
+	
     public static String estadoFinal = "12345678 ";
     
     public static void main(String[] args) {
+        
+        String Facil = "Rapido:   "+estadoRapido, Medio = "Medio:     "+estadoMedio;
+        String Dificil= "Lento:      "+estadoLento, tab ="         ";
     	
-        ArbolBusqueda a = new ArbolBusqueda(new Nodo(estadoInicial), estadoFinal);
-   
-        long inicio1 = System.nanoTime();
-        a.busquedaPorLaHeuristica(1);
-        long fin1 = System.nanoTime();
-        long tiempoTotalheuristica1 = fin1 - inicio1;
-        System.out.println("Fin heurística 1 \n");
-        long inicio2 = System.nanoTime();
-        a.busquedaPorLaHeuristica(2);
-        long fin2 = System.nanoTime();
-        long tiempoTotalheuristica2 = fin2 - inicio2;
-        System.out.println("Fin heurística 2 \n");
-       long inicio3 = System.nanoTime();
-        a.busquedaPorLaHeuristica(3);
-        long fin3 = System.nanoTime();
-        long tiempoTotalheuristica3 = ( fin3 - inicio3);
-        System.out.println("Fin heurística 3 \n");
-        System.out.println("Tiempo por la heuristica 1: "+ tiempoTotalheuristica1);
-        System.out.println("Tiempo por la heuristica 2: "+ tiempoTotalheuristica2);
-        System.out.println("Tiempo por la heuristica 3: "+ tiempoTotalheuristica3);
+    	ArbolBusqueda arbol;
+    	long inicio, fin;
+    	double tiempoTotalAnchura, tiempoTotalProfundidad, tiempoTotalheuristica1, tiempoTotalheuristica2;
+
+    	String [] estados = { estadoRapido, estadoMedio, estadoLento };
+    	String [] NombreEstados = { Facil, Medio, Dificil };
+    	
+    	String [] cabezera = {"Estados Iniciales ","Anchura","Profundida","Heuristica 1","Heuristica 2"};
+        String[][] datos = new String[5][4] ;
+        int i = -1;
+
+        for (String estado : estados) { i++;
+    	
+	    	arbol = new ArbolBusqueda(new Nodo(estado), estadoFinal);
+	    
+	        inicio = System.nanoTime();
+	        arbol.busquedaPorAnchura();
+	        fin = System.nanoTime();
+	        tiempoTotalAnchura = (double) (fin - inicio) / 1000000000;
+	        
+			inicio = System.nanoTime();
+			arbol.busquedaPorProfundidad();
+	        fin = System.nanoTime();
+	        tiempoTotalProfundidad = (double) (fin - inicio) / 1000000000;
+	        
+	        inicio = System.nanoTime();
+	        arbol.busquedaPorLaHeuristica(1);
+	        fin = System.nanoTime();
+	        tiempoTotalheuristica1 = (double) (fin - inicio) / 1000000000;
+	        
+	        inicio = System.nanoTime();
+	        arbol.busquedaPorLaHeuristica(2);
+	        fin = System.nanoTime();
+	        tiempoTotalheuristica2 = (double) (fin - inicio) / 1000000000;
+	        
+	        String [] fila = { NombreEstados[i], tab +Double. toString(tiempoTotalAnchura),
+	        		tab + Double.toString(tiempoTotalProfundidad) , tab +Double.toString(tiempoTotalheuristica1),
+	        		tab + Double.toString(tiempoTotalheuristica2) };
+	        
+	        datos[i] = fila;
+    
+	    }
         
-        
-       
+        muestraTabla(datos,cabezera);
+	      
+	}
+    
+    public static void muestraTabla(String[][] datos, String []cabezera) {
+
+	    JFrame ventana = new JFrame();
+	    DefaultTableModel mod = new DefaultTableModel(datos,cabezera);
+	    JTable tabla= new JTable(mod);
+	    JLabel label;
+	    JScrollPane scroll = new JScrollPane(tabla);
+	    scroll.setBounds(40,40,620,71);
+	    
+	    label = new JLabel("(Tiempo en segundos)");
+	    label.setBounds(40,8,160,30);
+	    
+	    ventana.setLayout(null);
+	    ventana.setSize(720,200);
+	    ventana.setTitle("Tabla comparativa");
+	    ventana.setLocationRelativeTo(null);
+	    ventana.add(label);
+	    ventana.add(scroll);
+	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    ventana.setVisible(true);
+    	
     }
+    
 }

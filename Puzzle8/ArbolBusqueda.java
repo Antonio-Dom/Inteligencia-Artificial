@@ -87,9 +87,7 @@ public class ArbolBusqueda {
 	    	case 2:
 	    		heuristica = heuristica2();
 	    		break;
-	    	case 3:
-	    		heuristica = heuristica3();
-	    		break;
+	    	
     	}
         Nodo nodoActual = raiz;
         Collection<String> estadosVisitados = new ArrayList();
@@ -120,7 +118,7 @@ public class ArbolBusqueda {
         Comparator<Nodo> compara = new Comparator<Nodo>() {
             @Override
             public int compare(Nodo n1, Nodo n2) {
-            	return Heuristica1(raiz.getEstado());
+            	return Heuristica1(n1.getEstado()) < Heuristica1(n2.getEstado()) ? -1 : 1 ;
             }
         };
         return compara;
@@ -142,7 +140,7 @@ public class ArbolBusqueda {
         Comparator<Nodo> compara = new Comparator<Nodo>() {
             @Override
             public int compare(Nodo n1, Nodo n2) {
-            	return Heuristica2(raiz.getEstado());
+            	return Heuristica2(n1.getEstado()) < Heuristica2(n2.getEstado()) ? -1 : 1 ;
             }
         };
         return compara;
@@ -167,35 +165,5 @@ public class ArbolBusqueda {
 		return h;
 	}
 
-    
-    public Comparator<Nodo> heuristica3() {
-        Comparator<Nodo> compara = new Comparator<Nodo>() {
-            @Override
-            public int compare(Nodo n1, Nodo n2) {
-            	return Heuristica3(raiz.getEstado());
-            }
-        };
-        return compara;
-    }
-
-	public int Heuristica3(String estado) {
-			
-		int contador = 0 ;
-    	for(int i = 0; i < objetivo.length(); i++) {
-    		
-    		if(estado.charAt(i) != objetivo.charAt(i) ) {
-    			contador ++;
-    		}
-    	}
-    	return contador;
-		
-	
-	}
-    
-   
-    
-   
-    
-    
     
 }
